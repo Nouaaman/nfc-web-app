@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { LayoutDashboard } from "lucide-react";
 import CodeVerification from "../components/CodeVerification";
+import { UserContext } from "../context/userContext";
 
 export default function Login() {
+  const userData = useContext(UserContext);
+
   const [codeVerificationVisivile, setCodeVerificationVisivile] =
     useState(false);
 

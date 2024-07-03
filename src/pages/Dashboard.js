@@ -1,22 +1,14 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { User, Clock, Shield, LogOut } from "lucide-react";
+import { UserContext } from "../context/userContext";
 
 const Dashboard = () => {
-  const [userData, setUserData] = React.useState({
-    name: "John Doe",
-    email: "john.doe@example.com",
-    role: "Employee",
-    lastLogin: "2024-07-02 09:30:22",
-    recentActivity: [
-      { action: "Logged in", timestamp: "2024-07-02 09:30:22" },
-      { action: "Accessed Project X", timestamp: "2024-07-02 10:15:43" },
-      { action: "Updated profile", timestamp: "2024-07-01 14:22:10" },
-    ],
-  });
+  const userData = useContext(UserContext);
+  const [user, setUser] = React.useState(userData.user);
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm">
+      <nav className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex">
@@ -27,9 +19,9 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="flex items-center">
-              <button className="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
+              <button className="ml-3 inline-flex items-center px-4 py-2 border border-transparent font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
                 <LogOut className="mr-2 h-4 w-4" />
-                Logout
+                Se deconnecter
               </button>
             </div>
           </div>
@@ -52,11 +44,11 @@ const Dashboard = () => {
                   <div className="ml-5 w-0 flex-1">
                     <dl>
                       <dt className="text-sm font-medium text-gray-500 truncate">
-                        User
+                        Utilisateur
                       </dt>
                       <dd className="flex items-baseline">
                         <div className="text-2xl font-semibold text-gray-900">
-                          {userData.name}
+                          {user.name}
                         </div>
                       </dd>
                     </dl>
@@ -66,9 +58,9 @@ const Dashboard = () => {
               <div className="bg-gray-50 px-5 py-3">
                 <div className="text-sm">
                   <p className="font-medium text-cyan-700 truncate">
-                    {userData.email}
+                    {user.email}
                   </p>
-                  <p className="text-gray-500">{userData.role}</p>
+                  <p className="text-gray-500">{user.role}</p>
                 </div>
               </div>
             </div>
@@ -86,11 +78,11 @@ const Dashboard = () => {
                   <div className="ml-5 w-0 flex-1">
                     <dl>
                       <dt className="text-sm font-medium text-gray-500 truncate">
-                        Last Login
+                        Derniere connexion
                       </dt>
                       <dd className="flex items-baseline">
                         <div className="text-2xl font-semibold text-gray-900">
-                          {userData.lastLogin}
+                          {user.lastLogin}
                         </div>
                       </dd>
                     </dl>
@@ -112,11 +104,11 @@ const Dashboard = () => {
                   <div className="ml-5 w-0 flex-1">
                     <dl>
                       <dt className="text-sm font-medium text-gray-500 truncate">
-                        Security Status
+                        Statut de sécurité
                       </dt>
                       <dd className="flex items-baseline">
                         <div className="text-2xl font-semibold text-green-600">
-                          Secure
+                          sécurisé
                         </div>
                       </dd>
                     </dl>
@@ -129,11 +121,11 @@ const Dashboard = () => {
           {/* Recent Activity */}
           <div className="mt-8">
             <h2 className="text-lg leading-6 font-medium text-gray-900">
-              Recent Activity
+              Activité récente
             </h2>
             <div className="mt-2 bg-white shadow overflow-hidden sm:rounded-md">
               <ul role="list" className="divide-y divide-gray-200">
-                {userData.recentActivity.map((activity, index) => (
+                {user.recentActivity.map((activity, index) => (
                   <li key={index}>
                     <div className="px-4 py-4 sm:px-6">
                       <div className="flex items-center justify-between">
