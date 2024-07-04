@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import Spinner from "./Spinner";
+import { useNavigate } from "react-router-dom";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const PATH = API_URL + "auth/verify-code";
@@ -9,6 +10,8 @@ export default function CodeVerification({ handleHide, ...props }) {
   const [loading, setLoading] = useState(false);
   const [codes, setCodes] = useState(props.codes);
   const [identityToken, setIdentityToken] = useState(props.token);
+
+  const navigate = useNavigate();
 
   const handleCodeSubmit = (e, code) => {
     e.preventDefault();
@@ -27,7 +30,8 @@ export default function CodeVerification({ handleHide, ...props }) {
       .then((results) => {
         if (results.data) {
           localStorage.setItem("sessionToken", results.data.sessionToken);
-          window.location.href = "/dashboard";
+          // window.location.href = "/dashboard";
+          navigate("/dashboard");
         } else {
           toast.warning(results.message);
           handleHide();

@@ -5,7 +5,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import { UserProvider } from "./context/userContext";
 
 const router = createBrowserRouter([
   {
@@ -26,18 +25,16 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <UserProvider>
-        <RouterProvider router={router} />;
-        <ToastContainer
-          position="bottom-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          draggable
-          theme="light"
-        />
-      </UserProvider>
+      <RouterProvider router={router} />;
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        draggable
+        theme="light"
+      />
     </>
   );
 }

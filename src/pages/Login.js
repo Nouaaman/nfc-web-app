@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { LayoutDashboard } from "lucide-react";
 import CodeVerification from "../components/CodeVerification";
-import { UserContext } from "../context/userContext";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 
@@ -9,6 +9,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 const PATH = API_URL + "auth/verify-identity";
 
 export default function Login() {
+  const navigate = useNavigate();
   // const userData = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
@@ -23,7 +24,6 @@ export default function Login() {
     e.preventDefault();
 
     setLoading(true);
-    console.log("username", username);
 
     fetch(`${PATH}/${username}`, {
       method: "GET",
