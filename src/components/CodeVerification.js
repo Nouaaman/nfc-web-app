@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import Spinner from "./Spinner";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const PATH = API_URL + "auth/verify-code";
 
 export default function CodeVerification(props) {
+  const [loading, setLoading] = useState(false);
   const [codes, setCodes] = useState(props.codes);
   const [identityToken, setIdentityToken] = useState(props.token);
 
@@ -63,6 +65,8 @@ export default function CodeVerification(props) {
           ))}
         </div>
       </form>
+      {/* Spinner */}
+      {loading && <Spinner />}
     </div>
   );
 }
