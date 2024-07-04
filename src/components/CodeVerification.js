@@ -31,16 +31,14 @@ export default function CodeVerification(props) {
           toast.warning(results.message);
           setTimeout(() => {
             window.location.href = "/login";
-          }, 3000);
+          }, 2000);
         }
-
-        toast.warning(results.message);
       })
       .catch((error) => {
         toast.error(error.message);
       })
       .finally(() => {
-        // setLoading(false);
+        setLoading(false);
       });
   };
 
