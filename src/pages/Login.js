@@ -2,22 +2,59 @@ import React, { useState, useContext } from "react";
 import { LayoutDashboard } from "lucide-react";
 import CodeVerification from "../components/CodeVerification";
 import { UserContext } from "../context/userContext";
+import { toast } from "react-toastify";
+import Spinner from "../components/Spinner";
+
+const API_URL = process.env.REACT_APP_API_URL;
+const PATH = API_URL + "auth/verify-identity";
 
 export default function Login() {
-  const userData = useContext(UserContext);
+  // const userData = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState("");
+
+  const [identityToken, setItentityToken] = useState("");
+  const [codes, setCodes] = useState([]);
 
   const [codeVerificationVisivile, setCodeVerificationVisivile] =
     useState(false);
 
-  const [username, setUsername] = useState("");
-
   const handleusernameSubmit = (e) => {
     e.preventDefault();
-    setCodeVerificationVisivile(true);
+
+    setLoading(true);
+    console.log("username", username);
+
+    fetch(`${PATH}/${username}`, {
+      method: "GET",
+      cors: "no-cors",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((results) => {
+        if (results.codes) {
+          setCodes(results.codes);
+        } else {
+          toast.warning(results.message);
+          return;
+        }
+
+        setItentityToken(results.identityToken);
+        console.log(results);
+        setCodeVerificationVisivile(true);
+        setLoading(false);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
-    <div className="flex  flex-1 flex-col justify-center items-center px-6 py-12 lg:px-8 ">
+    <div className="flex w-full  flex-1 flex-col justify-center items-center px-6 py-12 lg:px-8 ">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm flex justify-center items-center flex-col gap-2">
         <LayoutDashboard size={80} color="#0e7490" />
 
@@ -71,8 +108,13 @@ export default function Login() {
         </p>
       </div>
 
+      {/* spinner */}
+      {loading && <Spinner />}
+
       {/* auth verification */}
-      {codeVerificationVisivile && <CodeVerification />}
+      {codeVerificationVisivile && (
+        <CodeVerification codes={codes} token={identityToken} />
+      )}
     </div>
   );
 }
