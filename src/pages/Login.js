@@ -37,6 +37,9 @@ export default function Login() {
           setCodes(results.codes);
         } else {
           toast.warning(results.message);
+          setCodes([]);
+          setCodeVerificationVisivile(false);
+
           return;
         }
 

@@ -24,9 +24,14 @@ export default function CodeVerification(props) {
       })
       .then((results) => {
         // setCodes(results.codes);
-        if (results.data.sessionToken) {
+        if (results.data) {
           localStorage.setItem("sessionToken", results.data.sessionToken);
           window.location.href = "/dashboard";
+        } else {
+          toast.warning(results.message);
+          setTimeout(() => {
+            window.location.href = "/login";
+          }, 3000);
         }
 
         toast.warning(results.message);
