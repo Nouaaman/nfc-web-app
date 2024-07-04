@@ -56,6 +56,10 @@ export default function Login() {
       });
   };
 
+  const handleHide = () => {
+    setCodeVerificationVisivile(false);
+  };
+
   return (
     <div className="flex w-full  flex-1 flex-col justify-center items-center px-6 py-12 lg:px-8 ">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm flex justify-center items-center flex-col gap-2">
@@ -116,7 +120,11 @@ export default function Login() {
 
       {/* auth verification */}
       {codeVerificationVisivile && (
-        <CodeVerification codes={codes} token={identityToken} />
+        <CodeVerification
+          codes={codes}
+          token={identityToken}
+          handleHide={handleHide}
+        />
       )}
     </div>
   );

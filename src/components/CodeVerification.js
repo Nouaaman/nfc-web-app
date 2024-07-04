@@ -5,7 +5,7 @@ import Spinner from "./Spinner";
 const API_URL = process.env.REACT_APP_API_URL;
 const PATH = API_URL + "auth/verify-code";
 
-export default function CodeVerification(props) {
+export default function CodeVerification({ handleHide, ...props }) {
   const [loading, setLoading] = useState(false);
   const [codes, setCodes] = useState(props.codes);
   const [identityToken, setIdentityToken] = useState(props.token);
@@ -25,15 +25,12 @@ export default function CodeVerification(props) {
         return response.json();
       })
       .then((results) => {
-        // setCodes(results.codes);
         if (results.data) {
           localStorage.setItem("sessionToken", results.data.sessionToken);
           window.location.href = "/dashboard";
         } else {
           toast.warning(results.message);
-          setTimeout(() => {
-            window.location.href = "/login";
-          }, 2000);
+          handleHide();
         }
       })
       .catch((error) => {
